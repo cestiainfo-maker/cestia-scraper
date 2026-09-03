@@ -1,0 +1,33 @@
+# Este archivo le dice a GitHub: "corre scrape_exito.py cada 6 horas,
+# solo, sin que nadie tenga que entrar a nada".
+#
+# DEBE quedar guardado exactamente en esta ruta dentro del repositorio:
+#   .github/workflows/actualizar_precios.yml
+
+name: Actualizar precios Cestia
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # cada 6 horas, todos los días
+  workflow_dispatch: {}       # además, permite darle "Run" a mano cuando quieras
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install requests
+
+      - name: Traer precios de Éxito y guardarlos en Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python scrape_exito.py
