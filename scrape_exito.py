@@ -20,7 +20,7 @@ import time
 import requests
 
 TIENDA = "exito"
-DOMINIO = "https://www.exito.com"
+DOMINIO = "https://tienda.exito.com"
 
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_KEY = os.environ["SUPABASE_KEY"]
@@ -122,7 +122,12 @@ def scrapear_categoria(ruta: str, nombre: str) -> int:
         url = f"{DOMINIO}/api/catalog_system/pub/products/search/{ruta}?_from={offset}&_to={offset + TAMANO_PAGINA - 1}"
         resp = requests.get(
             url,
-            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"},
+            headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                "Accept": "application/json, text/plain, */*",
+                "Accept-Language": "es-CO,es;q=0.9,en;q=0.8",
+                "Referer": f"{DOMINIO}/",
+            },
             timeout=20,
         )
         if resp.status_code == 429:
