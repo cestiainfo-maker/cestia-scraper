@@ -23,7 +23,7 @@ import time
 import requests
 
 TIENDA = "exito"
-DOMINIO = "https://www.exito.com"  # si falla, probar "https://tienda.exito.com"
+DOMINIO = "https://tienda.exito.com"
 
 SUPABASE_URL = os.environ["SUPABASE_URL"]   # ej. https://xxxxx.supabase.co
 SUPABASE_KEY = os.environ["SUPABASE_KEY"]   # la "service_role key" de Supabase
